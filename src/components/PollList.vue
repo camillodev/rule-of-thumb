@@ -15,12 +15,15 @@
         </b-dropdown-item>
       </b-dropdown>
     </div>
+    <div class="poll-list__content">
+        
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'PoolList',
+  name: 'PollList',
   data() {
     return {
       viewType: 'List',

@@ -20,7 +20,7 @@
       </button>
     </aside>
     <main role="main">
-     <PoolList />
+     <PollList />
     </main>
     <aside class="banner banner-bottom" role="doc-tip" aria-label="Submit a name">
       <img srcset="@/assets/img/bg-people.png 750w, @/assets/img/bg-people.@2x.png 1440w"
@@ -39,12 +39,12 @@
 </template>
 
 <script>
-import PoolList from './PoolList.vue';
+import PollList from './PollList.vue';
 
 export default {
   name: 'BannerComponent',
   components: {
-      PoolList
+      PollList
     },
     data() {
         return {};
