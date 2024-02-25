@@ -20,9 +20,7 @@
       </button>
     </aside>
     <main role="main">
-      <!-- Start: Implementation -->
-      👉 Your code goes here 👈
-      <!-- End: Implementation -->
+     <PoolList />
     </main>
     <aside class="banner banner-bottom" role="doc-tip" aria-label="Submit a name">
       <img srcset="@/assets/img/bg-people.png 750w, @/assets/img/bg-people.@2x.png 1440w"
@@ -41,14 +39,17 @@
 </template>
 
 <script>
+import PoolList from './PoolList.vue';
+
 export default {
   name: 'BannerComponent',
-  data() {
-    return {
-    };
-  },
-  methods: {
-  },
+  components: {
+      PoolList
+    },
+    data() {
+        return {};
+    },
+    methods: {},
 };
 </script>
 
