@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "sass-loader": "^14.1.1",
     "vue": "^2.6.14",
     "vuex": "^4.1.0"
   },
@@ -20,6 +21,7 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "sass": "^1.71.1",
     "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
