@@ -3,8 +3,8 @@
     <div class="poll-list__header">
       <h1>Previous Rulings</h1>
    <b-dropdown size="lg" variant="light" :text="viewType" class="m-md-2 custom-dropdown">
-        <b-dropdown-item v-for="type in types" :key="type.value" @click="viewType = type.value">
-          {{ type.text }}
+        <b-dropdown-item v-for="type in types" :key="type" @click="viewType = type">
+          {{ type }}
         </b-dropdown-item>
       </b-dropdown>
     </div>
@@ -17,12 +17,8 @@ export default {
   name: 'PoolList',
   data() {
     return {
-      viewType: 'list',
-      types: [
-        { text: 'Grid', value: 'grid' },
-        { text: 'List', value: 'list' },
-      ], 
-     
+      viewType: 'List',
+      types: ['Grid','List']
     };
   },
  
