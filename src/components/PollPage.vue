@@ -1,23 +1,26 @@
 <template>
-  <div>
-    <h1>Rule of Thumb</h1>
-    <NavbarComponent />
+    <div>
+      <NavbarComponent />
+      <HeroComponent />
+        <div class="max-centered">
+        
+        </div>
   </div>
 </template>
 
 <script>
 import NavbarComponent from './NavbarComponent.vue';
+import HeroComponent from './HeroComponent.vue';
 export default {
   name: 'PollPage',
   components: {
-    NavbarComponent
+    NavbarComponent,
+    HeroComponent,
   },
   data() {
-    return {
-    };
+    return {};
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
