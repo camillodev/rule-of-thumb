@@ -16,20 +16,31 @@
       </b-dropdown>
     </div>
     <div class="poll-list__content">
-        
+        <PollCard :card="cards[0]"/>
     </div>
   </div>
 </template>
 
 <script>
+import PollCard from './PollCard.vue';
+import mockData from "@/assets/data.json";
+
 export default {
   name: 'PollList',
+  components: {
+    PollCard
+  },
   data() {
     return {
       viewType: 'List',
       types: ['Grid', 'List'],
+      cards: []
     };
   },
+  created() {
+    this.cards = mockData.data;
+    console.log(this.cards)
+  }
 };
 </script>
 
