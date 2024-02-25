@@ -7,7 +7,7 @@
           {{ type.text }}
         </b-dropdown-item>
       </b-dropdown>
-    </div>yarn add bootstrap-vue bootstrap
+    </div>
 
   </div>
 </template>
