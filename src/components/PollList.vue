@@ -16,7 +16,7 @@
       </b-dropdown>
     </div>
     <div class="poll-list__content">
-        <PollCard :card="cards[0]"/>
+        <PollCard v-for="(card, index) in cards" :key="index" :card="card" class="mt-4" />
     </div>
   </div>
 </template>
