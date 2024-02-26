@@ -15,8 +15,8 @@
         </b-dropdown-item>
       </b-dropdown>
     </div>
-    <div class="poll-list__content">
-        <PollCard v-for="(card, index) in cards" :key="index" :card="card" class="mt-4" />
+    <div class="poll-list__content" :class="{ 'grid': isSquare }">
+        <PollCard v-for="(card, index) in cards" :is-square="isSquare" :key="index" :card="card" class="mt-4" />
     </div>
   </div>
 </template>
@@ -37,16 +37,20 @@ export default {
       cards: []
     };
   },
+  computed: {
+    isSquare() {
+      return this.viewType === 'Grid'
+    }
+  },
   created() {
     this.cards = mockData.data;
-    console.log(this.cards)
   }
 };
 </script>
 
 <style scoped lang="scss">
 .poll-list {
-  margin-bottom: 300px;
+  margin-bottom: 35px;
 
   &__header {
     display: flex;
@@ -55,6 +59,20 @@ export default {
   }
 
   &__content {
+     display: flex;
+  flex-direction: column;
+
+
+   &.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+
+    .mt-4 {
+      flex: 0 0 30%;
+      max-width: 30%;
+    }
+  }
     &.list {
       // list view styles
     }
