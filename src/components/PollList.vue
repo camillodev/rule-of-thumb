@@ -17,9 +17,18 @@
       </b-dropdown>
     </div>
     <div class="poll-list__content" :class="{ grid: isSquare }">
-      <div class="pollcard__container  mt-4"  v-for="card in cards" :key="card.id">
-        <PollCardSquare v-if="isSquare" :card="card" @voteEvent="voteEventHandler(card.id, $event)"  />
-        <PollCardHorizontal v-else :card="card"  @voteEvent="voteEventHandler(card.id, $event)" />
+      <div
+        class="pollcard__container mt-4"
+        v-for="personality in personalityList"
+        :key="personality.id">
+        <PollCardSquare
+          v-if="isSquare"
+          :card="personality"
+          @voteEvent="voteEventHandler(personality.id, $event)" />
+        <PollCardHorizontal
+          v-else
+          :card="personality"
+          @voteEvent="voteEventHandler(personality.id, $event)" />
       </div>
     </div>
   </div>
@@ -28,29 +37,36 @@
 <script>
 import PollCardSquare from './PollCardSquare.vue';
 import PollCardHorizontal from './PollCardHorizontal.vue';
-import mockData from '@/assets/data.json';
+import  { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'PollList',
   components: {
     PollCardHorizontal,
-    PollCardSquare
+    PollCardSquare,
   },
   data() {
     return {
       viewType: 'List',
       types: ['Grid', 'List'],
-      cards: [],
+      personalityLisxt: [],
       isMobile: window.innerWidth <= 767,
     };
   },
   computed: {
+    ...mapGetters('personality',[
+      'personalityList', 
+    ]),
+   
     isSquare() {
       return this.viewType === 'Grid';
     },
   },
 
   methods: {
+    ...mapActions('personality',[
+      'getPersonalities', 
+    ]),
     checkMobile() {
       this.isMobile = window.innerWidth <= 767;
       if (this.isMobile) {
@@ -58,14 +74,16 @@ export default {
       }
     },
 
-    voteEventHandler(cardId, voteType) {
-      console.log('----vote handler: ', cardId, voteType)
-    }
+    voteEventHandler(personalityId, voteType) {
+      console.log('----vote handler: ', personalityId, voteType);
+    },
   },
   created() {
-    this.cards = mockData.data;
     window.addEventListener('resize', this.checkMobile);
     this.checkMobile();
+    this.getPersonalities()
+    console.log('--persona: ', this.personalityList)
+    debugger;
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.checkMobile);
