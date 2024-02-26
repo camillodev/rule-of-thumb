@@ -81,9 +81,8 @@ export default {
   created() {
     window.addEventListener('resize', this.checkMobile);
     this.checkMobile();
-    this.getPersonalities()
-    console.log('--persona: ', this.personalityList)
-    debugger;
+    this.getPersonalities();
+   
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.checkMobile);

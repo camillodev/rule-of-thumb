@@ -1,4 +1,6 @@
 import { db } from '@/firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
+
 export default {
   namespaced: true,
   state: {
@@ -10,18 +12,11 @@ export default {
     },
   },
   actions: {
-    getPersonalities({ commit }) {
-      db.collection('personality')
-        .get()
-        .then((snapshot) => {
-          let personalityList = [];
-          snapshot.forEach((doc) => {
-            let item = doc.data();
-            item.id = doc.id;
-            personalityList.push(item);
-          });
-          commit('personalityList', personalityList);
-        });
+    async getPersonalities({ commit }) {
+      const personalitiesCollection = collection(db, 'personality');
+      const personalitySnapshot = await getDocs(personalitiesCollection);
+      const personalityList = personalitySnapshot.docs.map((doc) => doc.data());
+      commit('setPersonalityList', personalityList);
     },
   },
   getters: {
