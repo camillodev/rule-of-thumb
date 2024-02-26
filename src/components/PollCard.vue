@@ -4,12 +4,12 @@
       <div class="pollcard__profile col-md-3">
         <img :src="imagePath" :alt="card.name + ' profile picture'" />
       </div>
-      <div class="pollcard__details col-md-9">
-        <div class="pollcard__description col-md-6">
+      <div class="pollcard__details d-flex text-white col-md-9">
+        <div class="pollcard__description col-md-8">
           <h3>{{ card.name }}</h3>
           <p>{{ card.description }}</p>
         </div>
-        <div class="pollcard__actions col-md-3">
+        <div class="pollcard__actions col-md-4">
           <p v-if="hasVoted">Thank you for voting</p>
           <p v-else>{{ lastUpdatedDescription }}</p>
           <div class="vote-actions">
@@ -26,10 +26,11 @@
     </div>
     <div class="vote-results">
       <div class="positive" :style="{ width: positivePercentage + '%' }">
+        <b-icon icon="hand-thumbs-up-fill"></b-icon>
         {{ positivePercentage }}%
       </div>
       <div class="negative" :style="{ width: negativePercentage + '%' }">
-        {{ negativePercentage }}%
+        {{ negativePercentage }}% <b-icon icon="hand-thumbs-down-fill"></b-icon>
       </div>
     </div>
   </div>
@@ -91,15 +92,36 @@ export default {
 .pollcard {
   height: 170px;
   width: 100%;
-  border: 1px solid #000;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), #979797 30%);
-
+  background-color: #979797;
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 76%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), #979797 96%);
+    pointer-events: none;
+  }
   &__description {
-    white-space: nowrap;
+    text-align: left;
     overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 10px 0;
+    height: 140px;
+    h3 {
+      color: #fff;
+      font-weight: 400;
+      font-size: 36px;
+    }
+    p {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   &__profile {
@@ -112,27 +134,40 @@ export default {
       width: 100%;
     }
   }
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 70%; // Ajuste isso conforme necessário para controlar onde o degradê começa/termina
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), #979797 77%);
-    pointer-events: none; // Isso garante que o pseudo-elemento não interfira com cliques
+  
+
+  &__actions {
+    margin-top: 10px;
   }
 }
 
 .vote-results {
   display: flex;
-  height: 20px;
+  align-items: center;
+  height: 50px;
   background-color: #f0f0f0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
+  opacity: 0.6;
+  font-size: 27px;
+  div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    color: #fff;
+  }
+  .b-icon {
+    margin: 0 5px;
+  }
 }
 .positive {
-  background-color: green;
+  background-color: #3CBBB4;
 }
 .negative {
-  background-color: red;
+  background-color: #F9AD1D;
+  justify-content: end;
 }
 </style>
