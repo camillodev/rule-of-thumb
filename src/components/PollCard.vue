@@ -76,7 +76,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pollcard__container{
-  width: fit-content;
-}
+
 </style>

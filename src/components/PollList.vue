@@ -3,6 +3,7 @@
     <div class="poll-list__header">
       <h1>Previous Rulings</h1>
       <b-dropdown
+      v-if="!isMobile"
         size="lg"
         variant="light"
         :text="viewType"
@@ -15,36 +16,59 @@
         </b-dropdown-item>
       </b-dropdown>
     </div>
-    <div class="poll-list__content" :class="{ 'grid': isSquare }">
-        <PollCard v-for="(card, index) in cards" :is-square="isSquare" :key="index" :card="card" class="mt-4" />
+    <div class="poll-list__content" :class="{ grid: isSquare }">
+      <PollCard
+        v-for="(card, index) in cards"
+        :is-square="isSquare"
+        :key="index"
+        :card="card"
+        class="mt-4" />
     </div>
   </div>
 </template>
 
 <script>
 import PollCard from './PollCard.vue';
-import mockData from "@/assets/data.json";
+import mockData from '@/assets/data.json';
 
 export default {
   name: 'PollList',
   components: {
-    PollCard
+    PollCard,
   },
   data() {
     return {
       viewType: 'List',
       types: ['Grid', 'List'],
-      cards: []
+      cards: [],
+      isMobile: window.innerWidth <= 767,
+
     };
   },
   computed: {
     isSquare() {
-      return this.viewType === 'Grid'
+      return this.viewType === 'Grid';
+    },
+   
+  },
+ 
+  methods: {
+    checkMobile() {
+      this.isMobile = window.innerWidth <= 767;
+      if (this.isMobile) {
+      this.viewType = "Grid"
     }
+    },
   },
   created() {
     this.cards = mockData.data;
-  }
+    window.addEventListener('resize', this.checkMobile);
+    this.checkMobile();
+
+  },
+   beforeDestroy() {
+    window.removeEventListener('resize', this.checkMobile);
+  },
 };
 </script>
 
@@ -59,20 +83,30 @@ export default {
   }
 
   &__content {
-     display: flex;
-  flex-direction: column;
+    display: flex;
+    overflow: scroll;
 
-
-   &.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-
-    .mt-4 {
-      flex: 0 0 30%;
-      max-width: 30%;
+    @media (min-width: 767px) {
+      flex-direction: column;
     }
-  }
+
+    &.grid {
+      @media (min-width: 767px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        justify-content: center;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (min-width: 1000px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .pollcard__container {
+        margin-right: 15px;
+      }
+    }
     &.list {
       // list view styles
     }

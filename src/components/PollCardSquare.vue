@@ -8,18 +8,17 @@
           class="image-responsive" />
       </div>
       <div class="pollcard__details text-white">
-         <b-icon
-            v-if="isNegative"
-            icon="hand-thumbs-down-fill"
-            class="btn-vote btn-result text-white negative"></b-icon>
-          <b-icon
-            v-if="isPositive"
-            icon="hand-thumbs-up-fill"
-            class="btn-vote btn-result text-white positive"></b-icon>
+        <b-icon
+          v-if="isNegative"
+          icon="hand-thumbs-down-fill"
+          class="btn-vote btn-result text-white negative"></b-icon>
+        <b-icon
+          v-if="isPositive"
+          icon="hand-thumbs-up-fill"
+          class="btn-vote btn-result text-white positive"></b-icon>
         <div class="pollcard__description">
           <h3>{{ card.name }}</h3>
           <p>{{ card.description }}</p>
-         
         </div>
         <div class="pollcard__actions">
           <p v-if="hasVoted">Thank you for voting</p>
@@ -33,7 +32,7 @@
               <b-icon icon="hand-thumbs-up-fill"></b-icon>
             </button>
             <button
-            v-if="!hasVoted"
+              v-if="!hasVoted"
               @click="selectVote('dislike')"
               class="btn-dislike btn-vote text-white negative"
               :class="{ active: selectedVote === 'dislike' }">
@@ -124,10 +123,14 @@ export default {
 
 <style lang="scss" scoped>
 .pollcard {
-  width: 350px;
+  min-width: 300px;
   height: 350px;
+  width: 100%;
+
   overflow: hidden;
   position: relative;
+
+ 
 
   &__info {
     position: relative;
@@ -135,7 +138,7 @@ export default {
   }
   &__details {
     position: absolute;
-    top: 120px;
+    top: 100px;
     bottom: 0;
     padding: 0 35px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
@@ -154,16 +157,16 @@ export default {
   &__description {
     text-align: left;
     overflow: hidden;
-    width: 300px;
     h3 {
       color: #fff;
       font-weight: 400;
-      font-size: 36px;
+      font-size: 30px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;
       margin-bottom: 5px;
+      max-width: 250px;
     }
     p {
       display: -webkit-box;
@@ -171,7 +174,8 @@ export default {
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+      font-size: 16px;
     }
   }
 
@@ -179,7 +183,7 @@ export default {
     text-align: right;
     p {
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       font-size: 12px;
     }
 
