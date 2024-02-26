@@ -1,7 +1,9 @@
 <template>
   <div class="pollcard">
     <div class="pollcard__info d-flex row">
+      
       <div class="pollcard__profile col-md-3">
+        <div class="pollcard__bg"></div>
         <b-icon
           v-if="isNegative"
           icon="hand-thumbs-down-fill"
@@ -121,19 +123,17 @@ export default {
   overflow: hidden;
   position: relative;
   background-color: #979797;
-  &:after {
-    content: '';
+
+  &__info {
+    position: relative;
+  }
+  &__bg{
+   background: linear-gradient(to right, rgba(255, 255, 255, 0), #979797 90%);
     position: absolute;
     top: 0;
-    bottom: 0;
-    left: 0;
-    right: 76%;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), #979797 96%);
-    pointer-events: none;
-  }
-  &.square {
-    width: 350px;
-    height: 350px;
+    left: 175px;
+    width: 100px;
+    height: 100%;
   }
 
   &__description {
