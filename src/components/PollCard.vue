@@ -2,6 +2,14 @@
   <div class="pollcard">
     <div class="pollcard__info d-flex row">
       <div class="pollcard__profile col-md-3">
+        <b-icon
+        v-if="isNegative"
+          icon="hand-thumbs-down-fill"
+          class="btn-vote btn-result text-white negative"></b-icon>
+          <b-icon
+          v-if="isPositive"
+          icon="hand-thumbs-up-fill"
+          class="btn-vote btn-result text-white positive"></b-icon>
         <img :src="imagePath" :alt="card.name + ' profile picture'" />
       </div>
       <div class="pollcard__details d-flex text-white col-md-9">
@@ -16,15 +24,13 @@
             <button
               @click="selectVote('like')"
               class="btn-like btn-vote text-white positive"
-                :class="{ active: selectedVote === 'like' }">
-
+              :class="{ active: selectedVote === 'like' }">
               <b-icon icon="hand-thumbs-up-fill"></b-icon>
             </button>
             <button
               @click="selectVote('dislike')"
               class="btn-dislike btn-vote text-white negative"
-                :class="{ active: selectedVote === 'dislike' }">
-
+              :class="{ active: selectedVote === 'dislike' }">
               <b-icon icon="hand-thumbs-down-fill"></b-icon>
             </button>
             <button @click="voteHandler" class="btn-vote-now text-white">
@@ -84,17 +90,23 @@ export default {
 
       return `${formattedData} in ${formattedCategory}`;
     },
+    isPositive() {
+      return this.card.votes.positive > this.card.votes.negative
+    },
+    isNegative() {
+      return this.card.votes.negative > this.card.votes.positive
+    },
   },
   methods: {
     voteHandler() {
       this.hasVoted = true;
       this.$emit('voteEvent', this.selectedVote);
-      console.log('Voted for: ', this.selectedVote)
+      console.log('Voted for: ', this.selectedVote);
     },
 
     selectVote(selectedVote) {
       this.selectedVote = selectedVote;
-      console.log('selected vote: ', this.selectedVote)
+      console.log('selected vote: ', this.selectedVote);
     },
   },
 };
@@ -145,6 +157,14 @@ export default {
       height: 100%;
       width: 100%;
     }
+    .btn-result {
+      position: absolute;
+      top: 0;
+      left: 10px;
+      height: 45px;
+      width: 45px;
+      padding: 10px 10px;
+    }
   }
 
   &__actions {
@@ -157,16 +177,6 @@ export default {
       text-align: right;
       padding: 0 15px;
     }
-    .btn-vote {
-      border: 0;
-      margin-right: 10px;
-      padding: 10px 15px;
-     
-    }
-
-     .active {
-        border: 3px solid #FFF;
-      }
 
     .btn-vote-now {
       background-color: rgba(0, 0, 0, 0.6);
@@ -175,6 +185,16 @@ export default {
       padding: 10px 15px;
     }
   }
+}
+
+.btn-vote {
+  border: 0;
+  margin-right: 10px;
+  padding: 10px 15px;
+}
+
+.active {
+  border: 3px solid #fff;
 }
 
 .vote-results {
