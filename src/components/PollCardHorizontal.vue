@@ -15,11 +15,11 @@
         <img :src="imagePath" :alt="card.name + ' profile picture'" />
       </div>
       <div class="pollcard__details d-flex text-white col-md-9">
-        <div class="pollcard__description col-md-8">
+        <div class="pollcard__description col-md-7">
           <h3>{{ card.name }}</h3>
           <p>{{ card.description }}</p>
         </div>
-        <div class="pollcard__actions col-md-4">
+        <div class="pollcard__actions col-md-5">
           <p v-if="hasVoted">Thank you for voting</p>
           <p v-else>{{ lastUpdatedDescription }}</p>
           <div class="vote-actions">
@@ -128,11 +128,11 @@ export default {
     position: relative;
   }
   &__bg{
-   background: linear-gradient(to right, rgba(255, 255, 255, 0), #979797 90%);
+     background: linear-gradient(to right, rgba(255, 255, 255, 0), #979797 90%);
     position: absolute;
     top: 0;
-    left: 175px;
-    width: 100px;
+    right: 0;
+    width: 145px;
     height: 100%;
   }
 
@@ -189,7 +189,7 @@ export default {
       background-color: rgba(0, 0, 0, 0.6);
       border: 1px solid #fff;
       font-size: 18px;
-      padding: 10px 15px;
+      padding: 10px 10px;
     }
   }
 }
@@ -197,7 +197,7 @@ export default {
 .btn-vote {
   border: 0;
   margin-right: 10px;
-  padding: 10px 15px;
+  padding: 8px 13px;
 }
 
 .active {

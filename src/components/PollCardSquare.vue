@@ -130,7 +130,6 @@ export default {
   overflow: hidden;
   position: relative;
 
- 
 
   &__info {
     position: relative;
@@ -138,7 +137,7 @@ export default {
   }
   &__details {
     position: absolute;
-    top: 100px;
+    top: 145px;
     bottom: 0;
     padding: 0 35px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
