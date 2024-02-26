@@ -37,7 +37,7 @@
 <script>
 import PollCardSquare from './PollCardSquare.vue';
 import PollCardHorizontal from './PollCardHorizontal.vue';
-import  { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'PollList',
@@ -49,23 +49,21 @@ export default {
     return {
       viewType: 'List',
       types: ['Grid', 'List'],
-      personalityLisxt: [],
       isMobile: window.innerWidth <= 767,
     };
   },
   computed: {
-    ...mapGetters('personality',[
-      'personalityList', 
-    ]),
-   
+    ...mapGetters('personality', ['personalityList']),
+
     isSquare() {
       return this.viewType === 'Grid';
     },
   },
 
   methods: {
-    ...mapActions('personality',[
-      'getPersonalities', 
+    ...mapActions('personality', [
+      'getPersonalities',
+      'incrementVote',
     ]),
     checkMobile() {
       this.isMobile = window.innerWidth <= 767;
@@ -75,14 +73,13 @@ export default {
     },
 
     voteEventHandler(personalityId, voteType) {
-      console.log('----vote handler: ', personalityId, voteType);
+      this.incrementVote({personalityId, voteType});
     },
   },
   created() {
     window.addEventListener('resize', this.checkMobile);
     this.checkMobile();
     this.getPersonalities();
-   
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.checkMobile);

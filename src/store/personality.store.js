@@ -1,5 +1,11 @@
 import { db } from '@/firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  increment,
+} from 'firebase/firestore';
 
 export default {
   namespaced: true,
@@ -13,10 +19,28 @@ export default {
   },
   actions: {
     async getPersonalities({ commit }) {
-      const personalitiesCollection = collection(db, 'personality');
-      const personalitySnapshot = await getDocs(personalitiesCollection);
-      const personalityList = personalitySnapshot.docs.map((doc) => doc.data());
-      commit('setPersonalityList', personalityList);
+      try {
+        const personalitiesCollection = collection(db, 'personality');
+        const personalitySnapshot = await getDocs(personalitiesCollection);
+        const personalityList = personalitySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        commit('setPersonalityList', personalityList);
+      } catch (error) {
+        console.error('Error getting documents: ', error);
+      }
+    },
+    async incrementVote({ dispatch }, { personalityId, voteType }) {
+      try {
+        const personalityRef = doc(db, 'personality', personalityId);
+        await updateDoc(personalityRef, {
+          [`votes.${voteType}`]: increment(1),
+        });
+        dispatch('getPersonalities');
+      } catch (error) {
+        console.error('Error updating document: ', error);
+      }
     },
   },
   getters: {

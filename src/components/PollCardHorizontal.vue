@@ -25,16 +25,16 @@
           <div class="vote-actions">
             <button
             v-if="!hasVoted"
-              @click="selectVote('like')"
+              @click="selectVote('positive')"
               class="btn-like btn-vote text-white positive"
-              :class="{ active: selectedVote === 'like' }">
+              :class="{ active: selectedVote === 'positive' }">
               <b-icon icon="hand-thumbs-up-fill"></b-icon>
             </button>
             <button
             v-if="!hasVoted"
-              @click="selectVote('dislike')"
+              @click="selectVote('negative')"
               class="btn-dislike btn-vote text-white negative"
-              :class="{ active: selectedVote === 'dislike' }">
+              :class="{ active: selectedVote === 'negative' }">
               <b-icon icon="hand-thumbs-down-fill"></b-icon>
             </button>
             <button v-if="hasVoted" @click="voteAgain"  class="btn-vote-now text-white">
