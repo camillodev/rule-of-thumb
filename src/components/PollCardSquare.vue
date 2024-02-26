@@ -223,7 +223,7 @@ export default {
   bottom: 0;
   width: 100%;
   z-index: 9999;
-  opacity: 0.6;
+  opacity: 0.8;
   font-size: 18px;
   div {
     height: 100%;
