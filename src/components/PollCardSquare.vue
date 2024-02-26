@@ -38,8 +38,9 @@
               :class="{ active: selectedVote === 'dislike' }">
               <b-icon icon="hand-thumbs-down-fill"></b-icon>
             </button>
-            <button @click="voteHandler" class="btn-vote-now text-white">
-              Vote Now
+            <button @click="voteHandler"  :disabled="!selectedVote" class="btn-vote-now text-white">
+             <span v-if="hasVoted"> Vote Again</span>
+             <span v-else> Vote Now</span>
             </button>
           </div>
         </div>
