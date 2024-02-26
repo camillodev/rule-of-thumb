@@ -13,13 +13,23 @@
           <p v-if="hasVoted">Thank you for voting</p>
           <p v-else>{{ lastUpdatedDescription }}</p>
           <div class="vote-actions">
-            <button @click="selectVote('like')" class="like-btn">
-              <b-icon icon="hand-thumbs-up"></b-icon>
+            <button
+              @click="selectVote('like')"
+              class="btn-like btn-vote text-white positive"
+                :class="{ active: selectedVote === 'like' }">
+
+              <b-icon icon="hand-thumbs-up-fill"></b-icon>
             </button>
-            <button @click="selectVote('dislike')" class="dislike-btn">
-              <b-icon icon="hand-thumbs-down"></b-icon>
+            <button
+              @click="selectVote('dislike')"
+              class="btn-dislike btn-vote text-white negative"
+                :class="{ active: selectedVote === 'dislike' }">
+
+              <b-icon icon="hand-thumbs-down-fill"></b-icon>
             </button>
-            <button @click="voteHandler" class="vote-now-btn">Vote Now</button>
+            <button @click="voteHandler" class="btn-vote-now text-white">
+              Vote Now
+            </button>
           </div>
         </div>
       </div>
@@ -79,10 +89,12 @@ export default {
     voteHandler() {
       this.hasVoted = true;
       this.$emit('voteEvent', this.selectedVote);
+      console.log('Voted for: ', this.selectedVote)
     },
 
     selectVote(selectedVote) {
       this.selectedVote = selectedVote;
+      console.log('selected vote: ', this.selectedVote)
     },
   },
 };
@@ -134,10 +146,34 @@ export default {
       width: 100%;
     }
   }
-  
 
   &__actions {
     margin-top: 10px;
+    p {
+      font-weight: bold;
+    }
+
+    .vote-actions {
+      text-align: right;
+      padding: 0 15px;
+    }
+    .btn-vote {
+      border: 0;
+      margin-right: 10px;
+      padding: 10px 15px;
+     
+    }
+
+     .active {
+        border: 3px solid #FFF;
+      }
+
+    .btn-vote-now {
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 1px solid #fff;
+      font-size: 18px;
+      padding: 10px 15px;
+    }
   }
 }
 
@@ -164,10 +200,10 @@ export default {
   }
 }
 .positive {
-  background-color: #3CBBB4;
+  background-color: #3cbbb4;
 }
 .negative {
-  background-color: #F9AD1D;
+  background-color: #f9ad1d;
   justify-content: end;
 }
 </style>
