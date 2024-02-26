@@ -63,7 +63,7 @@
 import moment from 'moment';
 
 export default {
-  name: 'PollCard',
+  name: 'PollCardHorizontal',
   props: {
     card: {
       type: Object,
@@ -152,6 +152,9 @@ export default {
       color: #fff;
       font-weight: 400;
       font-size: 36px;
+       overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     p {
       display: -webkit-box;
@@ -183,13 +186,10 @@ export default {
 
   &__actions {
     margin-top: 10px;
+    text-align: right;
+    padding: 0 15px;
     p {
       font-weight: bold;
-    }
-
-    .vote-actions {
-      text-align: right;
-      padding: 0 15px;
     }
 
     .btn-vote-now {

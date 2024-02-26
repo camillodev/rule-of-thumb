@@ -64,7 +64,7 @@
 import moment from 'moment';
 
 export default {
-  name: 'PollCard',
+  name: 'PollCardSquare',
   props: {
     card: {
       type: Object,
@@ -170,7 +170,6 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      width: 100%;
       margin-bottom: 5px;
       max-width: 250px;
     }
