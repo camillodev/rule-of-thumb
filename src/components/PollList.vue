@@ -46,6 +46,8 @@ export default {
 
 <style scoped lang="scss">
 .poll-list {
+  margin-bottom: 300px;
+
   &__header {
     display: flex;
     align-items: center;
