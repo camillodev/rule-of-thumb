@@ -3,7 +3,7 @@
     <div class="poll-list__header">
       <h1>Previous Rulings</h1>
       <b-dropdown
-      v-if="!isMobile"
+        v-if="!isMobile"
         size="lg"
         variant="light"
         :text="viewType"
@@ -17,24 +17,24 @@
       </b-dropdown>
     </div>
     <div class="poll-list__content" :class="{ grid: isSquare }">
-      <PollCard
-        v-for="(card, index) in cards"
-        :is-square="isSquare"
-        :key="index"
-        :card="card"
-        class="mt-4" />
+      <div class="pollcard__container  mt-4"  v-for="card in cards" :key="card.id">
+        <PollCardSquare v-if="isSquare" :card="card" @voteEvent="voteEventHandler(card.id, $event)"  />
+        <PollCardHorizontal v-else :card="card"  @voteEvent="voteEventHandler(card.id, $event)" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import PollCard from './PollCard.vue';
+import PollCardSquare from './PollCardSquare.vue';
+import PollCardHorizontal from './PollCardHorizontal.vue';
 import mockData from '@/assets/data.json';
 
 export default {
   name: 'PollList',
   components: {
-    PollCard,
+    PollCardHorizontal,
+    PollCardSquare
   },
   data() {
     return {
@@ -42,31 +42,32 @@ export default {
       types: ['Grid', 'List'],
       cards: [],
       isMobile: window.innerWidth <= 767,
-
     };
   },
   computed: {
     isSquare() {
       return this.viewType === 'Grid';
     },
-   
   },
- 
+
   methods: {
     checkMobile() {
       this.isMobile = window.innerWidth <= 767;
       if (this.isMobile) {
-      this.viewType = "Grid"
-    }
+        this.viewType = 'Grid';
+      }
     },
+
+    voteEventHandler(cardId, voteType) {
+      console.log('----vote handler: ', cardId, voteType)
+    }
   },
   created() {
     this.cards = mockData.data;
     window.addEventListener('resize', this.checkMobile);
     this.checkMobile();
-
   },
-   beforeDestroy() {
+  beforeDestroy() {
     window.removeEventListener('resize', this.checkMobile);
   },
 };
