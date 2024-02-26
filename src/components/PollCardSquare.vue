@@ -38,9 +38,11 @@
               :class="{ active: selectedVote === 'dislike' }">
               <b-icon icon="hand-thumbs-down-fill"></b-icon>
             </button>
-            <button @click="voteHandler"  :disabled="!selectedVote" class="btn-vote-now text-white">
-             <span v-if="hasVoted"> Vote Again</span>
-             <span v-else> Vote Now</span>
+            <button v-if="hasVoted" @click="voteAgain"  class="btn-vote-now text-white">
+              Vote Again
+            </button>
+            <button v-else @click="submitVote"  :disabled="!selectedVote" class="btn-vote-now text-white">
+              Vote Now
             </button>
           </div>
         </div>
@@ -108,10 +110,14 @@ export default {
     },
   },
   methods: {
-    voteHandler() {
+    submitVote() {
       this.hasVoted = true;
       this.$emit('voteEvent', this.selectedVote);
-      console.log('Voted for: ', this.selectedVote);
+    },
+
+    voteAgain() {
+      this.hasVoted = false;
+      this.selectedVote = '';
     },
 
     selectVote(selectedVote) {
