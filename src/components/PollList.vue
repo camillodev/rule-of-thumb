@@ -106,6 +106,7 @@ export default {
 
     @media (min-width: 767px) {
       flex-direction: column;
+      overflow: unset;
     }
 
     &.grid {
