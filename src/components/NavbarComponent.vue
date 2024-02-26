@@ -50,7 +50,7 @@ export default {
   z-index: 2;
   top: 0;
   display: flex;
-  width: calc(100vw - 2rem);
+  width: 100%;
   min-height: 10rem;
   justify-content: space-between;
   padding: 0 1rem;
