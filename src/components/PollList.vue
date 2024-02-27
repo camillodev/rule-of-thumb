@@ -3,7 +3,7 @@
     <div class="poll-list__header">
       <h1>Previous Rulings</h1>
       <b-dropdown
-        v-if="!isMobile"
+        v-show="!isMobile"
         size="lg"
         variant="light"
         :text="viewType"
@@ -61,24 +61,26 @@ export default {
   },
 
   methods: {
-    ...mapActions('personality', [
-      'getPersonalities',
-      'incrementVote',
-    ]),
-    checkMobile() {
-      this.isMobile = window.innerWidth <= 767;
-      if (this.isMobile) {
-        this.viewType = 'Grid';
-      }
-    },
+    ...mapActions('personality', ['getPersonalities', 'incrementVote']),
 
     voteEventHandler(personalityId, voteType) {
-      this.incrementVote({personalityId, voteType});
+      this.incrementVote({ personalityId, voteType });
+    },
+
+    checkMobile() {
+      let timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        this.isMobile = window.innerWidth <= 767;
+        if (this.isMobile) {
+          this.viewType = 'Grid';
+        }
+      }, 200);
     },
   },
   created() {
-    window.addEventListener('resize', this.checkMobile);
     this.checkMobile();
+    window.addEventListener('resize', this.checkMobile);
     this.getPersonalities();
   },
   beforeDestroy() {
@@ -122,12 +124,6 @@ export default {
       .pollcard__container {
         margin-right: 15px;
       }
-    }
-    &.list {
-      // list view styles
-    }
-    &.grid {
-      // grid view styles
     }
   }
 }
