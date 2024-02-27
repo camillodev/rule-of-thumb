@@ -41,7 +41,7 @@ Rule of Thumb™️ is a dynamic and responsive application designed to capture 
 
 ## Deployment
 
-The application is deployed on Vercel. Visit [Rule of Thumb™️ on Vercel](https://vercel.com/camillodev/rule-of-thumb/92jPYvmGXYqRmVK4HW8qZWqpZPzY) to see the live version.
+The application is deployed on Vercel. Visit [Rule of Thumb™️ on Vercel](https://rule-of-thumb-j24abj6nm-camillodev.vercel.app/) to see the live version.
 
 ## License
 
