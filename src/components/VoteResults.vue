@@ -1,9 +1,9 @@
 <template>
   <div class="vote-results">
-    <div class="positive" :style="{ width: positivePercentage + '%' }">
+    <div class="positive vote-bar" :class="{'large': large}" :style="{ width: positivePercentage + '%' }">
       {{ positivePercentage }}% <b-icon icon="hand-thumbs-up-fill"></b-icon>
     </div>
-    <div class="negative" :style="{ width: negativePercentage + '%' }">
+    <div class="negative vote-bar" :class="{'large': large}" :style="{ width: negativePercentage + '%' }">
       {{ negativePercentage }}% <b-icon icon="hand-thumbs-down-fill"></b-icon>
     </div>
   </div>
@@ -13,6 +13,7 @@
 export default {
   name: 'VoteResults',
   props: {
+    large: Boolean,
     positivePercentage: Number,
     negativePercentage: Number,
   },
@@ -29,14 +30,16 @@ export default {
   z-index: 9999;
   opacity: 0.6;
 
-  div {
+  .vote-bar {
     display: flex;
     align-items: center;
     padding: 0 15px;
     color: var(--color-white);
-    min-height: 35px;
+    height: 35px;
   }
-
+  .large {
+    height: 55px;
+  }
   .positive { background-color: var(--color-positive); }
   .negative { background-color: var(--color-negative); justify-content: end; }
 }

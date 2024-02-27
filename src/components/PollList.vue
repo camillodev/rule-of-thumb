@@ -21,12 +21,8 @@
         class="pollcard__container mt-4"
         v-for="personality in personalityList"
         :key="personality.id">
-        <PollCardSquare
-          v-if="isSquare"
-          :card="personality"
-          @voteEvent="voteEventHandler(personality.id, $event)" />
-        <PollCardHorizontal
-          v-else
+        <PollCard
+          :isSquare="isSquare"
           :card="personality"
           @voteEvent="voteEventHandler(personality.id, $event)" />
       </div>
@@ -35,15 +31,13 @@
 </template>
 
 <script>
-import PollCardSquare from './PollCardSquare.vue';
-import PollCardHorizontal from './PollCardHorizontal.vue';
+import PollCard from './PollCard.vue';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'PollList',
   components: {
-    PollCardHorizontal,
-    PollCardSquare,
+    PollCard,
   },
   data() {
     return {

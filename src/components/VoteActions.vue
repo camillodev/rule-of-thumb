@@ -75,7 +75,6 @@ export default {
     text-align: right;
     p {
       font-weight: bold;
-      margin-bottom: 5px;
       font-size: 0.75rem; // 12px
     }
 }
