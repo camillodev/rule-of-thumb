@@ -22,11 +22,7 @@ export default {
       default: "positive",
       required: false
     },
-    large: {
-      type: Boolean,
-      default: false,
-      required: false
-    },
+   
     isActive: {
       type: Boolean,
       default: false,

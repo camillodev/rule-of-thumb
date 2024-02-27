@@ -21,7 +21,9 @@
           <h3>{{ card.name }}</h3>
           <p>{{ card.description }}</p>
         </div>
-        <div class="pollcard__actions col-md-5">
+        <VoteActions large class="pollcard__actions  col-md-5" @onSubmitVote="submitVoteHandler($event)" :lastUpdated="lastUpdatedDescription" />
+
+        <!-- <div class="pollcard__actions col-md-5">
           <p v-if="hasVoted">Thank you for voting</p>
           <p v-else>{{ lastUpdatedDescription }}</p>
           <div class="vote-actions">
@@ -49,7 +51,7 @@
               Vote Now
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="vote-results">
@@ -67,11 +69,15 @@
 <script>
 import moment from 'moment';
 import VoteButton from './VoteButton.vue';
-
+import VoteActions from './VoteActions.vue';
+import { mapActions } from 'vuex';
 export default {
+  
   name: 'PollCardHorizontal',
   components: {
     VoteButton,
+    // eslint-disable-next-line vue/no-unused-components
+    VoteActions
   },
   props: {
     card: {
@@ -118,19 +124,10 @@ export default {
     },
   },
   methods: {
-    submitVote() {
-      this.hasVoted = true;
-      this.$emit('voteEvent', this.selectedVote);
-    },
+     ...mapActions('personality', ['incrementVote']),
 
-    voteAgain() {
-      this.hasVoted = false;
-      this.selectedVote = '';
-    },
-
-    selectVote(selectedVote) {
-      this.selectedVote = selectedVote;
-      console.log('selected vote: ', this.selectedVote);
+    submitVoteHandler(selectedVote) {
+      this.incrementVote({personalityId: this.card.id, voteType: selectedVote})
     },
   },
 };
@@ -203,13 +200,8 @@ export default {
   }
 
   &__actions {
-    margin-top: 10px;
-    text-align: right;
+    margin-top: 20px;
     padding: 0 15px;
-    p {
-      font-weight: bold;
-      font-size: 1.125rem; // 18px
-    }
 
     .btn-vote-now {
       background-color: var(--color-dark-overlay);
@@ -258,5 +250,9 @@ export default {
 .negative {
   background-color: var(--color-negative);
   justify-content: end;
+}
+
+.vote-actions {
+   margin-right: 15px;
 }
 </style>

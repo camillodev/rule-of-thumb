@@ -23,35 +23,7 @@
           <h3>{{ card.name }}</h3>
           <p>{{ card.description }}</p>
         </div>
-        <div class="pollcard__actions">
-          <p v-if="hasVoted">Thank you for voting</p>
-          <p v-else>{{ lastUpdatedDescription }}</p>
-          <div class="vote-actions">
-            <VoteButton
-              v-if="!hasVoted"
-              variant="positive"
-              :is-active="selectedVote == 'positive'"
-              @click="selectVote('positive')" />
-            <VoteButton
-              v-if="!hasVoted"
-              variant="negative"
-              :is-active="selectedVote == 'negative'"
-              @click="selectVote('negative')" />
-            <button
-              v-if="hasVoted"
-              @click="voteAgain"
-              class="btn-vote-now text-white">
-              Vote Again
-            </button>
-            <button
-              v-else
-              @click="submitVote"
-              :disabled="!selectedVote"
-              class="btn-vote-now text-white">
-              Vote Now
-            </button>
-          </div>
-        </div>
+        <VoteActions @onSubmitVote="submitVoteHandler($event)" :lastUpdated="lastUpdatedDescription" />
       </div>
     </div>
     <div class="vote-results">
@@ -69,11 +41,14 @@
 <script>
 import moment from 'moment';
 import VoteButton from './VoteButton.vue';
+import VoteActions from './VoteActions.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'PollCardSquare',
   components: {
     VoteButton,
+    VoteActions,
   },
   props: {
     card: {
@@ -124,18 +99,10 @@ export default {
     },
   },
   methods: {
-    submitVote() {
-      this.hasVoted = true;
-      this.$emit('voteEvent', this.selectedVote);
-    },
+    ...mapActions('personality', ['incrementVote']),
 
-    voteAgain() {
-      this.hasVoted = false;
-      this.selectedVote = '';
-    },
-
-    selectVote(selectedVote) {
-      this.selectedVote = selectedVote;
+    submitVoteHandler(selectedVote) {
+      this.incrementVote({personalityId: this.card.id, voteType: selectedVote})
     },
   },
 };
@@ -197,35 +164,8 @@ export default {
       font-size: 1rem;
     }
   }
-
-  &__actions {
-    text-align: right;
-    p {
-      font-weight: bold;
-      margin-bottom: 5px;
-      font-size: 0.75rem; // 12px
-    }
-
-    .vote-actions {
-      text-align: right;
-    }
-
-    .btn-vote-now {
-      background-color: var(--color-darker-background);
-      border: 1px solid var(--color-white);
-      padding: 0px 10px;
-    }
-  }
 }
 
-.btn-vote {
-  border: 0;
-  margin-right: 10px;
-}
-
-.active {
-  border: 3px solid var(--color-white);
-}
 
 .btn-result {
   position: absolute;
@@ -251,9 +191,9 @@ export default {
     padding: 0 15px;
     color: var(--color-white);
   }
-  .b-icon {
-    margin: 0 5px;
-  }
+ // .b-icon {
+   // margin: 0 5px;
+  //}
 }
 .positive {
   background-color: rgb(var(--color-green-positive));
