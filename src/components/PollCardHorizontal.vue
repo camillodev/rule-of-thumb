@@ -1,17 +1,19 @@
 <template>
   <div class="pollcard">
     <div class="pollcard__info d-flex row">
-      
       <div class="pollcard__profile col-md-3">
         <div class="pollcard__bg"></div>
-        <b-icon
+        <VoteButton
           v-if="isNegative"
-          icon="hand-thumbs-down-fill"
-          class="btn-vote btn-result text-white negative"></b-icon>
-        <b-icon
+          class="btn-result"
+          variant="negative"
+          disabled />
+        <VoteButton
           v-if="isPositive"
-          icon="hand-thumbs-up-fill"
-          class="btn-vote btn-result text-white positive"></b-icon>
+          class="btn-result"
+          variant="positive"
+          disabled />
+
         <img :src="imagePath" :alt="card.name + ' profile picture'" />
       </div>
       <div class="pollcard__details d-flex text-white col-md-9">
@@ -23,24 +25,27 @@
           <p v-if="hasVoted">Thank you for voting</p>
           <p v-else>{{ lastUpdatedDescription }}</p>
           <div class="vote-actions">
+            <VoteButton
+              v-if="!hasVoted"
+              variant="positive"
+              :is-active="selectedVote == 'positive'"
+              @click="selectVote('positive')" />
+            <VoteButton
+              v-if="!hasVoted"
+              variant="negative"
+              :is-active="selectedVote == 'negative'"
+              @click="selectVote('negative')" />
             <button
-            v-if="!hasVoted"
-              @click="selectVote('positive')"
-              class="btn-like btn-vote text-white positive"
-              :class="{ active: selectedVote === 'positive' }">
-              <b-icon icon="hand-thumbs-up-fill"></b-icon>
-            </button>
-            <button
-            v-if="!hasVoted"
-              @click="selectVote('negative')"
-              class="btn-dislike btn-vote text-white negative"
-              :class="{ active: selectedVote === 'negative' }">
-              <b-icon icon="hand-thumbs-down-fill"></b-icon>
-            </button>
-            <button v-if="hasVoted" @click="voteAgain"  class="btn-vote-now text-white">
+              v-if="hasVoted"
+              @click="voteAgain"
+              class="btn-vote-now text-white">
               Vote Again
             </button>
-            <button v-else @click="submitVote"  :disabled="!selectedVote" class="btn-vote-now text-white">
+            <button
+              v-else
+              @click="submitVote"
+              :disabled="!selectedVote"
+              class="btn-vote-now text-white">
               Vote Now
             </button>
           </div>
@@ -61,9 +66,13 @@
 
 <script>
 import moment from 'moment';
+import VoteButton from './VoteButton.vue';
 
 export default {
   name: 'PollCardHorizontal',
+  components: {
+    VoteButton,
+  },
   props: {
     card: {
       type: Object,
@@ -81,10 +90,14 @@ export default {
       return this.card.votes.positive + this.card.votes.negative;
     },
     positivePercentage() {
-      return Math.round((this.card.votes.positive / this.totalVotes) * 100);
+      return this.totalVotes > 0
+        ? Math.round((this.card.votes.positive / this.totalVotes) * 100)
+        : 0;
     },
     negativePercentage() {
-      return Math.round((this.card.votes.negative / this.totalVotes) * 100);
+      return this.totalVotes > 0
+        ? Math.round((this.card.votes.negative / this.totalVotes) * 100)
+        : 0;
     },
     imagePath() {
       return require('@/assets/img/' + this.card.picture);
@@ -105,7 +118,7 @@ export default {
     },
   },
   methods: {
-   submitVote() {
+    submitVote() {
       this.hasVoted = true;
       this.$emit('voteEvent', this.selectedVote);
     },
@@ -123,7 +136,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>.pollcard {
+<style lang="scss" scoped>
+.pollcard {
   height: 170px;
   width: 100%;
   overflow: hidden;
@@ -133,8 +147,12 @@ export default {
   &__info {
     position: relative;
   }
-  &__bg{
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), var(--color-gray) 90%);
+  &__bg {
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      var(--color-gray) 90%
+    );
     position: absolute;
     top: 0;
     right: 0;
@@ -150,7 +168,7 @@ export default {
     h3 {
       color: var(--color-white);
       font-weight: 400;
-      font-size: 2.25rem; // 36px 
+      font-size: 2.25rem; // 36px
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -161,7 +179,7 @@ export default {
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      font-size: 1rem; 
+      font-size: 1rem;
     }
   }
 
@@ -196,7 +214,7 @@ export default {
     .btn-vote-now {
       background-color: var(--color-dark-overlay);
       border: 1px solid var(--color-white);
-      font-size: 1.125rem; // 18px 
+      font-size: 1.125rem; // 18px
       padding: 10px 10px;
     }
   }

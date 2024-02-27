@@ -104,20 +104,20 @@ export default {
     display: flex;
     overflow: scroll;
 
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-sm) {
       flex-direction: column;
       overflow: unset;
     }
 
     &.grid {
-      @media (min-width: 768px) {
+      @media (min-width:$breakpoint-sm) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
         justify-content: center;
       }
 
-      @media (min-width: 992px) {
+      @media (min-width: $breakpoint-md) {
         grid-template-columns: repeat(3, 1fr); 
       }
 

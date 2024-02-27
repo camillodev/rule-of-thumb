@@ -8,14 +8,17 @@
           class="image-responsive" />
       </div>
       <div class="pollcard__details text-white">
-        <b-icon
+        <VoteButton
           v-if="isNegative"
-          icon="hand-thumbs-down-fill"
-          class="btn-vote btn-result text-white negative"></b-icon>
-        <b-icon
+          class="btn-result"
+          variant="negative"
+          disabled />
+        <VoteButton
           v-if="isPositive"
-          icon="hand-thumbs-up-fill"
-          class="btn-vote btn-result text-white positive"></b-icon>
+          class="btn-result"
+          variant="positive"
+          disabled />
+
         <div class="pollcard__description">
           <h3>{{ card.name }}</h3>
           <p>{{ card.description }}</p>
@@ -24,24 +27,27 @@
           <p v-if="hasVoted">Thank you for voting</p>
           <p v-else>{{ lastUpdatedDescription }}</p>
           <div class="vote-actions">
-            <button
+            <VoteButton
               v-if="!hasVoted"
-              @click="selectVote('positive')"
-              class="btn-like btn-vote text-white positive"
-              :class="{ active: selectedVote === 'positive' }">
-              <b-icon icon="hand-thumbs-up-fill"></b-icon>
-            </button>
-            <button
+              variant="positive"
+              :is-active="selectedVote == 'positive'"
+              @click="selectVote('positive')" />
+            <VoteButton
               v-if="!hasVoted"
-              @click="selectVote('negative')"
-              class="btn-dislike btn-vote text-white negative"
-              :class="{ active: selectedVote === 'negative' }">
-              <b-icon icon="hand-thumbs-down-fill"></b-icon>
-            </button>
-            <button v-if="hasVoted" @click="voteAgain"  class="btn-vote-now text-white">
+              variant="negative"
+              :is-active="selectedVote == 'negative'"
+              @click="selectVote('negative')" />
+            <button
+              v-if="hasVoted"
+              @click="voteAgain"
+              class="btn-vote-now text-white">
               Vote Again
             </button>
-            <button v-else @click="submitVote"  :disabled="!selectedVote" class="btn-vote-now text-white">
+            <button
+              v-else
+              @click="submitVote"
+              :disabled="!selectedVote"
+              class="btn-vote-now text-white">
               Vote Now
             </button>
           </div>
@@ -62,9 +68,13 @@
 
 <script>
 import moment from 'moment';
+import VoteButton from './VoteButton.vue';
 
 export default {
   name: 'PollCardSquare',
+  components: {
+    VoteButton,
+  },
   props: {
     card: {
       type: Object,
@@ -86,10 +96,14 @@ export default {
       return this.card.votes.positive + this.card.votes.negative;
     },
     positivePercentage() {
-      return Math.round((this.card.votes.positive / this.totalVotes) * 100);
+      return this.totalVotes > 0
+        ? Math.round((this.card.votes.positive / this.totalVotes) * 100)
+        : 0;
     },
     negativePercentage() {
-      return Math.round((this.card.votes.negative / this.totalVotes) * 100);
+      return this.totalVotes > 0
+        ? Math.round((this.card.votes.negative / this.totalVotes) * 100)
+        : 0;
     },
     imagePath() {
       return require('@/assets/img/' + this.card.picture);
@@ -122,7 +136,6 @@ export default {
 
     selectVote(selectedVote) {
       this.selectedVote = selectedVote;
-      console.log('selected vote: ', this.selectedVote);
     },
   },
 };
@@ -141,10 +154,14 @@ export default {
   }
   &__details {
     position: absolute;
-    top: 145px; 
+    top: 145px;
     bottom: 0;
     padding: 0 35px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-darker-background));
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      var(--color-darker-background)
+    );
   }
 
   &__profile {
@@ -167,7 +184,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-bottom:  5px;
+      margin-bottom: 5px;
       max-width: 250px;
     }
     p {
@@ -176,8 +193,8 @@ export default {
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom:  5px;
-      font-size: 1rem; 
+      margin-bottom: 5px;
+      font-size: 1rem;
     }
   }
 
@@ -196,15 +213,14 @@ export default {
     .btn-vote-now {
       background-color: var(--color-darker-background);
       border: 1px solid var(--color-white);
-      font-size: 1.125rem; 
-      padding:5px 10px;
+      padding: 0px 10px;
     }
   }
 }
 
 .btn-vote {
   border: 0;
-  margin-right:  10px;
+  margin-right: 10px;
 }
 
 .active {
@@ -215,9 +231,6 @@ export default {
   position: absolute;
   top: 7px;
   left: 0;
-  height: 30px;
-  width: 30px;
-  padding: 5px 5px; 
 }
 
 .vote-results {
