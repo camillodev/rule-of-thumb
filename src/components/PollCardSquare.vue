@@ -26,15 +26,8 @@
         <VoteActions @onSubmitVote="submitVoteHandler($event)" :lastUpdated="lastUpdatedDescription" />
       </div>
     </div>
-    <div class="vote-results">
-      <div class="positive" :style="{ width: positivePercentage + '%' }">
-        <b-icon icon="hand-thumbs-up-fill"></b-icon>
-        {{ positivePercentage }}%
-      </div>
-      <div class="negative" :style="{ width: negativePercentage + '%' }">
-        {{ negativePercentage }}% <b-icon icon="hand-thumbs-down-fill"></b-icon>
-      </div>
-    </div>
+    <VoteResults :negativePercentage="negativePercentage" :positivePercentage="positivePercentage" />
+   
   </div>
 </template>
 
@@ -42,6 +35,7 @@
 import moment from 'moment';
 import VoteButton from './VoteButton.vue';
 import VoteActions from './VoteActions.vue';
+import VoteResults from './VoteResults.vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -49,6 +43,7 @@ export default {
   components: {
     VoteButton,
     VoteActions,
+    VoteResults,
   },
   props: {
     card: {
@@ -174,32 +169,11 @@ export default {
 }
 
 .vote-results {
-  display: flex;
-  align-items: center;
-  height: 35px;
-  background-color: var(--color-light-gray);
   position: absolute;
-  bottom: 0;
-  width: 100%;
   z-index: 9999;
   opacity: 0.8;
   font-size: 1.125rem; // 18px
-  div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    color: var(--color-white);
-  }
- // .b-icon {
-   // margin: 0 5px;
-  //}
+  
 }
-.positive {
-  background-color: rgb(var(--color-green-positive));
-}
-.negative {
-  background-color: rgb(var(--color-yellow-negative));
-  justify-content: end;
-}
+
 </style>

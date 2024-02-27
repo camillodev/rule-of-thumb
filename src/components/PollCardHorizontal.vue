@@ -22,47 +22,9 @@
           <p>{{ card.description }}</p>
         </div>
         <VoteActions large class="pollcard__actions  col-md-5" @onSubmitVote="submitVoteHandler($event)" :lastUpdated="lastUpdatedDescription" />
-
-        <!-- <div class="pollcard__actions col-md-5">
-          <p v-if="hasVoted">Thank you for voting</p>
-          <p v-else>{{ lastUpdatedDescription }}</p>
-          <div class="vote-actions">
-            <VoteButton
-              v-if="!hasVoted"
-              variant="positive"
-              :is-active="selectedVote == 'positive'"
-              @click="selectVote('positive')" />
-            <VoteButton
-              v-if="!hasVoted"
-              variant="negative"
-              :is-active="selectedVote == 'negative'"
-              @click="selectVote('negative')" />
-            <button
-              v-if="hasVoted"
-              @click="voteAgain"
-              class="btn-vote-now text-white">
-              Vote Again
-            </button>
-            <button
-              v-else
-              @click="submitVote"
-              :disabled="!selectedVote"
-              class="btn-vote-now text-white">
-              Vote Now
-            </button>
-          </div>
-        </div> -->
       </div>
     </div>
-    <div class="vote-results">
-      <div class="positive" :style="{ width: positivePercentage + '%' }">
-        <b-icon icon="hand-thumbs-up-fill"></b-icon>
-        {{ positivePercentage }}%
-      </div>
-      <div class="negative" :style="{ width: negativePercentage + '%' }">
-        {{ negativePercentage }}% <b-icon icon="hand-thumbs-down-fill"></b-icon>
-      </div>
-    </div>
+    <VoteResults :negativePercentage="negativePercentage" :positivePercentage="positivePercentage" />
   </div>
 </template>
 
@@ -70,14 +32,15 @@
 import moment from 'moment';
 import VoteButton from './VoteButton.vue';
 import VoteActions from './VoteActions.vue';
+import VoteResults from './VoteResults.vue';
 import { mapActions } from 'vuex';
 export default {
   
   name: 'PollCardHorizontal',
   components: {
     VoteButton,
-    // eslint-disable-next-line vue/no-unused-components
-    VoteActions
+    VoteActions,
+    VoteResults
   },
   props: {
     card: {
@@ -85,12 +48,7 @@ export default {
       default: () => ({}),
     },
   },
-  data() {
-    return {
-      selectedVote: '',
-      hasVoted: false,
-    };
-  },
+  
   computed: {
     totalVotes() {
       return this.card.votes.positive + this.card.votes.negative;
@@ -193,22 +151,11 @@ export default {
       position: absolute;
       top: 0;
       left: 10px;
-      height: 45px;
-      width: 45px;
-      padding: 10px 10px;
     }
   }
 
   &__actions {
-    margin-top: 20px;
-    padding: 0 15px;
-
-    .btn-vote-now {
-      background-color: var(--color-dark-overlay);
-      border: 1px solid var(--color-white);
-      font-size: 1.125rem; // 18px
-      padding: 10px 10px;
-    }
+    padding: 30px 15px;
   }
 }
 
@@ -217,42 +164,13 @@ export default {
   margin-right: 10px;
   padding: 8px 13px;
 }
-
-.active {
-  border: 3px solid var(--color-white);
-}
-
 .vote-results {
   display: flex;
-  align-items: center;
-  height: 50px;
-  background-color: var(--color-background);
   position: absolute;
-  bottom: 0;
-  width: 100%;
   z-index: 9999;
   opacity: 0.6;
   font-size: 1.6875rem; // 27px
-  div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    color: var(--color-white);
-  }
-  .b-icon {
-    margin: 0 5px;
-  }
-}
-.positive {
-  background-color: var(--color-positive);
-}
-.negative {
-  background-color: var(--color-negative);
-  justify-content: end;
 }
 
-.vote-actions {
-   margin-right: 15px;
-}
+
 </style>
