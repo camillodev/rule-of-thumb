@@ -89,7 +89,8 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+
 .poll-list {
   margin-bottom: 35px;
 
@@ -103,22 +104,21 @@ export default {
     display: flex;
     overflow: scroll;
 
-    @media (min-width: 767px) {
+    @media (min-width: 768px) {
       flex-direction: column;
       overflow: unset;
     }
 
     &.grid {
-      @media (min-width: 767px) {
+      @media (min-width: 768px) {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
         justify-content: center;
-        grid-template-columns: repeat(2, 1fr);
       }
 
-      @media (min-width: 1000px) {
-        grid-template-columns: repeat(3, 1fr);
+      @media (min-width: 992px) {
+        grid-template-columns: repeat(3, 1fr); 
       }
 
       .pollcard__container {
@@ -130,22 +130,29 @@ export default {
 
 .custom-dropdown {
   width: 200px;
-  border: 2px solid #000;
+  border: 2px solid var(--color-black);
   border-radius: 0;
+
   ul.dropdown-menu.show {
     left: -2px;
-  }
-  li {
-    border: 1px solid #000;
     border-radius: 0;
+  }
+
+  li {
+    border: 2px solid var(--color-black);
+    border-radius: 0;
+    background-color: var(--color-white);
     width: 200px;
     margin-top: -10px;
     margin-bottom: 10px;
     height: 50px;
+
     &:last-child {
       margin-bottom: -10px;
+      border-top:0px;
     }
   }
+
   .dropdown-menu.show {
     background: unset;
     padding: 0 !important;

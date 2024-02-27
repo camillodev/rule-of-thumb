@@ -123,19 +123,18 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.pollcard {
+<style lang="scss" scoped>.pollcard {
   height: 170px;
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: #979797;
+  background-color: var(--color-gray);
 
   &__info {
     position: relative;
   }
   &__bg{
-     background: linear-gradient(to right, rgba(255, 255, 255, 0), #979797 90%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), var(--color-gray) 90%);
     position: absolute;
     top: 0;
     right: 0;
@@ -149,10 +148,10 @@ export default {
     padding: 10px 0;
     height: 140px;
     h3 {
-      color: #fff;
+      color: var(--color-white);
       font-weight: 400;
-      font-size: 36px;
-       overflow: hidden;
+      font-size: 2.25rem; // 36px 
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -162,6 +161,7 @@ export default {
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
+      font-size: 1rem; 
     }
   }
 
@@ -190,12 +190,13 @@ export default {
     padding: 0 15px;
     p {
       font-weight: bold;
+      font-size: 1.125rem; // 18px
     }
 
     .btn-vote-now {
-      background-color: rgba(0, 0, 0, 0.6);
-      border: 1px solid #fff;
-      font-size: 18px;
+      background-color: var(--color-dark-overlay);
+      border: 1px solid var(--color-white);
+      font-size: 1.125rem; // 18px 
       padding: 10px 10px;
     }
   }
@@ -208,36 +209,36 @@ export default {
 }
 
 .active {
-  border: 3px solid #fff;
+  border: 3px solid var(--color-white);
 }
 
 .vote-results {
   display: flex;
   align-items: center;
   height: 50px;
-  background-color: #f0f0f0;
+  background-color: var(--color-background);
   position: absolute;
   bottom: 0;
   width: 100%;
   z-index: 9999;
   opacity: 0.6;
-  font-size: 27px;
+  font-size: 1.6875rem; // 27px
   div {
     height: 100%;
     display: flex;
     align-items: center;
     padding: 0 15px;
-    color: #fff;
+    color: var(--color-white);
   }
   .b-icon {
     margin: 0 5px;
   }
 }
 .positive {
-  background-color: #3cbbb4;
+  background-color: var(--color-positive);
 }
 .negative {
-  background-color: #f9ad1d;
+  background-color: var(--color-negative);
   justify-content: end;
 }
 </style>

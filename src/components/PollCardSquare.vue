@@ -127,16 +127,13 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .pollcard {
   min-width: 300px;
   height: 350px;
   width: 100%;
-
   overflow: hidden;
   position: relative;
-
 
   &__info {
     position: relative;
@@ -144,10 +141,10 @@ export default {
   }
   &__details {
     position: absolute;
-    top: 145px;
+    top: 145px; 
     bottom: 0;
     padding: 0 35px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-darker-background));
   }
 
   &__profile {
@@ -164,13 +161,13 @@ export default {
     text-align: left;
     overflow: hidden;
     h3 {
-      color: #fff;
+      color: var(--color-white);
       font-weight: 400;
-      font-size: 30px;
+      font-size: 1.875rem; // 30px
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-bottom: 5px;
+      margin-bottom:  5px;
       max-width: 250px;
     }
     p {
@@ -179,8 +176,8 @@ export default {
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 5px;
-      font-size: 16px;
+      margin-bottom:  5px;
+      font-size: 1rem; 
     }
   }
 
@@ -189,7 +186,7 @@ export default {
     p {
       font-weight: bold;
       margin-bottom: 5px;
-      font-size: 12px;
+      font-size: 0.75rem; // 12px
     }
 
     .vote-actions {
@@ -197,21 +194,21 @@ export default {
     }
 
     .btn-vote-now {
-      background-color: rgba(0, 0, 0, 0.6);
-      border: 1px solid #fff;
-      font-size: 18px;
-      padding: 5px 10px;
+      background-color: var(--color-darker-background);
+      border: 1px solid var(--color-white);
+      font-size: 1.125rem; 
+      padding:5px 10px;
     }
   }
 }
 
 .btn-vote {
   border: 0;
-  margin-right: 10px;
+  margin-right:  10px;
 }
 
 .active {
-  border: 3px solid #fff;
+  border: 3px solid var(--color-white);
 }
 
 .btn-result {
@@ -220,36 +217,36 @@ export default {
   left: 0;
   height: 30px;
   width: 30px;
-  padding: 5px 5px;
+  padding: 5px 5px; 
 }
 
 .vote-results {
   display: flex;
   align-items: center;
   height: 35px;
-  background-color: #f0f0f0;
+  background-color: var(--color-light-gray);
   position: absolute;
   bottom: 0;
   width: 100%;
   z-index: 9999;
   opacity: 0.8;
-  font-size: 18px;
+  font-size: 1.125rem; // 18px
   div {
     height: 100%;
     display: flex;
     align-items: center;
     padding: 0 15px;
-    color: #fff;
+    color: var(--color-white);
   }
   .b-icon {
     margin: 0 5px;
   }
 }
 .positive {
-  background-color: #3cbbb4;
+  background-color: rgb(var(--color-green-positive));
 }
 .negative {
-  background-color: #f9ad1d;
+  background-color: rgb(var(--color-yellow-negative));
   justify-content: end;
 }
 </style>
